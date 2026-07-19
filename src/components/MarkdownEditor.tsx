@@ -1419,14 +1419,6 @@ export default function MarkdownEditor() {
 
       {/* Body */}
       <main className="ink-body">
-        {/* Outline */}
-        {outlineOpen && (
-          <div
-            className="ink-outline-backdrop"
-            onClick={() => setOutlineOpen(false)}
-            aria-hidden="true"
-          />
-        )}
         <aside className={`ink-outline ${outlineOpen ? "" : "collapsed"}`}>
           <div className="ink-outline-head">
             <button
@@ -2341,13 +2333,6 @@ const styles = /* css */ `
     border-right: 1px solid var(--ink-border);
   }
   .ink-outline.collapsed { transform: translateX(-100%); box-shadow: none; }
-  .ink-outline-backdrop {
-    position: fixed; inset: 0; z-index: 44;
-    background: rgba(0,0,0,0.35);
-    backdrop-filter: blur(2px);
-    animation: ink-fade-in 180ms ease;
-  }
-  @keyframes ink-fade-in { from { opacity: 0 } to { opacity: 1 } }
   /* Floating toggle when outline is closed on mobile */
   .ink-outline.collapsed .ink-outline-toggle {
     position: fixed; top: calc(env(safe-area-inset-top) + 10px); left: 10px; z-index: 46;
