@@ -25,24 +25,11 @@ jobs:
       - uses: oven-sh/setup-bun@v2
 
       - run: bun install --frozen-lockfile
-      - run: bun run build
-
-      - name: Find build output
-        id: find-output
-        run: |
-          if [ -d "dist" ] && [ "$(ls -A dist 2>/dev/null)" ]; then
-            echo "path=dist" >> "$GITHUB_OUTPUT"
-          elif [ -d ".output/public" ] && [ "$(ls -A .output/public 2>/dev/null)" ]; then
-            echo "path=.output/public" >> "$GITHUB_OUTPUT"
-          else
-            echo "No build output found"
-            ls -la
-            exit 1
-          fi
+      - run: bunx vite build --config vite.config.static.ts
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ steps.find-output.outputs.path }}
+          path: dist
 
   deploy:
     needs: build
