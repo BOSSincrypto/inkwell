@@ -21,19 +21,19 @@ Most markdown editors are either too simple or too cluttered. Inkwell strikes th
 
 ## Features
 
-| Category | What you get |
-|---|---|
-| **Editor** | Live split/preview modes, syntax highlighting (100+ languages), find & replace, undo/redo, focus mode |
-| **Markdown** | GFM tables, task lists, footnotes, emoji shortcodes, auto-save to localStorage |
-| **Math** | Inline `$E=mc^2$` and block `$$...$$` rendering via KaTeX |
-| **Diagrams** | Mermaid flowcharts, sequence diagrams, and more -- rendered in-browser |
-| **Export** | Download as `.md`, `.html`, or print to `.pdf` |
-| **Sharing** | Generate a compressed URL hash to share documents without a server |
-| **Templates** | 7 built-in templates: Meeting Notes, Blog Post, README, Journal, Technical Spec, Math Notes, Diagrams |
-| **Snapshots** | Version your documents with named snapshots (up to 50) |
-| **Navigation** | Clickable outline sidebar, heading search, command palette (`Ctrl/⌘ + P`) |
-| **Themes** | Dark and light mode with a single click |
-| **Word Goals** | Set a daily word count target with a progress ring |
+| Category       | What you get                                                                                          |
+| -------------- | ----------------------------------------------------------------------------------------------------- |
+| **Editor**     | Live split/preview modes, syntax highlighting (100+ languages), find & replace, undo/redo, focus mode |
+| **Markdown**   | GFM tables, task lists, footnotes, emoji shortcodes, auto-save to localStorage                        |
+| **Math**       | Inline `$E=mc^2$` and block `$$...$$` rendering via KaTeX                                             |
+| **Diagrams**   | Mermaid flowcharts, sequence diagrams, and more -- rendered in-browser                                |
+| **Export**     | Download as `.md`, `.html`, or print to `.pdf`                                                        |
+| **Sharing**    | Generate a compressed URL hash to share documents without a server                                    |
+| **Templates**  | 7 built-in templates: Meeting Notes, Blog Post, README, Journal, Technical Spec, Math Notes, Diagrams |
+| **Snapshots**  | Version your documents with named snapshots (up to 50)                                                |
+| **Navigation** | Clickable outline sidebar, heading search, command palette (`Ctrl/⌘ + P`)                             |
+| **Themes**     | Dark and light mode with a single click                                                               |
+| **Word Goals** | Set a daily word count target with a progress ring                                                    |
 
 ## Quick Start
 
@@ -56,17 +56,17 @@ Open [http://localhost:5173](http://localhost:5173) and start writing.
 
 ## Keyboard Shortcuts
 
-| Action | Shortcut |
-|---|---|
-| Command palette | `⌘ P` |
-| Bold | `⌘ B` |
-| Italic | `⌘ I` |
-| Insert link | `⌘ K` |
-| Find & Replace | `⌘ F` |
-| Focus mode | `⌘ .` |
-| Undo / Redo | `⌘ Z` / `⇧ ⌘ Z` |
-| Save snapshot | `⇧ ⌘ S` |
-| Keyboard shortcuts | `?` |
+| Action             | Shortcut        |
+| ------------------ | --------------- |
+| Command palette    | `⌘ P`           |
+| Bold               | `⌘ B`           |
+| Italic             | `⌘ I`           |
+| Insert link        | `⌘ K`           |
+| Find & Replace     | `⌘ F`           |
+| Focus mode         | `⌘ .`           |
+| Undo / Redo        | `⌘ Z` / `⇧ ⌘ Z` |
+| Save snapshot      | `⇧ ⌘ S`         |
+| Keyboard shortcuts | `?`             |
 
 ## Tech Stack
 

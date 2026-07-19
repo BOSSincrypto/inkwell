@@ -78,9 +78,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Inkwell — Markdown Studio" },
-      { name: "description", content: "A refined markdown editor with live preview, import/export, syntax highlighting and autosave." },
+      {
+        name: "description",
+        content:
+          "A refined markdown editor with live preview, import/export, syntax highlighting and autosave.",
+      },
       { property: "og:title", content: "Inkwell — Markdown Studio" },
-      { property: "og:description", content: "A refined markdown editor with live preview and export." },
+      {
+        property: "og:description",
+        content: "A refined markdown editor with live preview and export.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -89,7 +96,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
     ],
   }),
   shellComponent: RootShell,

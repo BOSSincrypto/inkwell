@@ -8,13 +8,52 @@ import "katex/dist/katex.min.css";
 import mermaid from "mermaid";
 import LZString from "lz-string";
 import {
-  Bold, Italic, Strikethrough, Code, Link as LinkIcon, Image as ImageIcon,
-  List, ListOrdered, Quote, Heading1, Heading2, Heading3, CheckSquare,
-  Table as TableIcon, Minus, Download, Upload, FileDown, Sun, Moon,
-  Eye, EyeOff, Columns2, FileText, Copy, Trash2, Save, Search, Menu,
-  Undo2, Redo2, Printer, Sparkles, Replace, X, ChevronUp, ChevronDown,
-  Focus, Target, Check, Share2, Command, BookTemplate,
-  Keyboard, History, RotateCcw,
+  Bold,
+  Italic,
+  Strikethrough,
+  Code,
+  Link as LinkIcon,
+  Image as ImageIcon,
+  List,
+  ListOrdered,
+  Quote,
+  Heading1,
+  Heading2,
+  Heading3,
+  CheckSquare,
+  Table as TableIcon,
+  Minus,
+  Download,
+  Upload,
+  FileDown,
+  Sun,
+  Moon,
+  Eye,
+  EyeOff,
+  Columns2,
+  FileText,
+  Copy,
+  Trash2,
+  Save,
+  Search,
+  Menu,
+  Undo2,
+  Redo2,
+  Printer,
+  Sparkles,
+  Replace,
+  X,
+  ChevronUp,
+  ChevronDown,
+  Focus,
+  Target,
+  Check,
+  Share2,
+  Command,
+  BookTemplate,
+  Keyboard,
+  History,
+  RotateCcw,
 } from "lucide-react";
 
 mermaid.initialize({ startOnLoad: false, theme: "dark", securityLevel: "strict" });
@@ -32,23 +71,75 @@ function sanitizeSvg(svg: string): string {
 
 // Emoji shortcodes
 const EMOJI_MAP: Record<string, string> = {
-  smile: "😀", laughing: "😂", heart: "❤️", fire: "🔥", rocket: "🚀",
-  star: "⭐", check: "✅", cross: "❌", warning: "⚠️", bulb: "💡",
-  tada: "🎉", thumbsup: "👍", thumbsdown: "👎", eyes: "👀", wave: "👋",
-  pray: "🙏", clap: "👏", zap: "⚡", sparkles: "✨", bug: "🐛",
-  book: "📖", pencil: "✏️", pin: "📌", clock: "⏰", calendar: "📅",
-  chart: "📊", link: "🔗", lock: "🔒", key: "🔑", mag: "🔍",
+  smile: "😀",
+  laughing: "😂",
+  heart: "❤️",
+  fire: "🔥",
+  rocket: "🚀",
+  star: "⭐",
+  check: "✅",
+  cross: "❌",
+  warning: "⚠️",
+  bulb: "💡",
+  tada: "🎉",
+  thumbsup: "👍",
+  thumbsdown: "👎",
+  eyes: "👀",
+  wave: "👋",
+  pray: "🙏",
+  clap: "👏",
+  zap: "⚡",
+  sparkles: "✨",
+  bug: "🐛",
+  book: "📖",
+  pencil: "✏️",
+  pin: "📌",
+  clock: "⏰",
+  calendar: "📅",
+  chart: "📊",
+  link: "🔗",
+  lock: "🔒",
+  key: "🔑",
+  mag: "🔍",
 };
 
 // Templates
 const TEMPLATES: { name: string; icon: string; content: string }[] = [
-  { name: "Meeting Notes", icon: "📝", content: `# Meeting Notes — ${new Date().toLocaleDateString()}\n\n**Attendees:** \n**Date:** ${new Date().toLocaleDateString()}\n\n## Agenda\n\n1. \n2. \n3. \n\n## Discussion\n\n\n## Action Items\n\n- [ ] \n- [ ] \n\n## Next Steps\n\n` },
-  { name: "Blog Post", icon: "✍️", content: `# Title Goes Here\n\n> A compelling subtitle or excerpt.\n\n*Published on ${new Date().toLocaleDateString()}*\n\n## Introduction\n\nStart with a hook that grabs the reader's attention.\n\n## Main Point 1\n\n\n## Main Point 2\n\n\n## Conclusion\n\nWrap up with a memorable takeaway.\n` },
-  { name: "README", icon: "📦", content: `# Project Name\n\n> One-line description of what this project does.\n\n## Features\n\n- Feature 1\n- Feature 2\n- Feature 3\n\n## Installation\n\n\`\`\`bash\nnpm install my-project\n\`\`\`\n\n## Usage\n\n\`\`\`typescript\nimport { thing } from 'my-project';\nthing();\n\`\`\`\n\n## License\n\nMIT\n` },
-  { name: "Daily Journal", icon: "📔", content: `# ${new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}\n\n## 🌅 Morning\n\nHow I'm feeling: \n\nTop 3 priorities today:\n1. \n2. \n3. \n\n## 📝 Notes\n\n\n## 🌙 Evening Reflection\n\nWhat went well: \n\nWhat could improve: \n\nGratitude: \n` },
-  { name: "Technical Spec", icon: "🔧", content: `# Technical Design: [Feature Name]\n\n**Author:** \n**Status:** Draft\n**Date:** ${new Date().toLocaleDateString()}\n\n## Overview\n\nBrief description of what we're building and why.\n\n## Goals\n\n- \n- \n\n## Non-Goals\n\n- \n\n## Proposed Solution\n\n### Architecture\n\n\`\`\`mermaid\nflowchart LR\n  A[Client] --> B[API]\n  B --> C[(Database)]\n\`\`\`\n\n### API\n\n\`\`\`typescript\ninterface Example {\n  id: string;\n}\n\`\`\`\n\n## Alternatives Considered\n\n\n## Open Questions\n\n- [ ] \n` },
-  { name: "Math Notes", icon: "📐", content: `# Math Notes\n\n## Inline math\n\nEuler's identity: $e^{i\\pi} + 1 = 0$\n\n## Block math\n\n$$\n\\int_{-\\infty}^{\\infty} e^{-x^2}\\,dx = \\sqrt{\\pi}\n$$\n\n$$\n\\frac{\\partial}{\\partial t}\\Psi = -\\frac{i}{\\hbar}\\hat{H}\\Psi\n$$\n` },
-  { name: "Mermaid Diagram", icon: "🗺️", content: `# Diagrams\n\n\`\`\`mermaid\nflowchart TD\n  A[Start] --> B{Decision?}\n  B -->|Yes| C[Action A]\n  B -->|No| D[Action B]\n  C --> E[End]\n  D --> E\n\`\`\`\n\n\`\`\`mermaid\nsequenceDiagram\n  Alice->>Bob: Hello!\n  Bob-->>Alice: Hi there\n\`\`\`\n` },
+  {
+    name: "Meeting Notes",
+    icon: "📝",
+    content: `# Meeting Notes — ${new Date().toLocaleDateString()}\n\n**Attendees:** \n**Date:** ${new Date().toLocaleDateString()}\n\n## Agenda\n\n1. \n2. \n3. \n\n## Discussion\n\n\n## Action Items\n\n- [ ] \n- [ ] \n\n## Next Steps\n\n`,
+  },
+  {
+    name: "Blog Post",
+    icon: "✍️",
+    content: `# Title Goes Here\n\n> A compelling subtitle or excerpt.\n\n*Published on ${new Date().toLocaleDateString()}*\n\n## Introduction\n\nStart with a hook that grabs the reader's attention.\n\n## Main Point 1\n\n\n## Main Point 2\n\n\n## Conclusion\n\nWrap up with a memorable takeaway.\n`,
+  },
+  {
+    name: "README",
+    icon: "📦",
+    content: `# Project Name\n\n> One-line description of what this project does.\n\n## Features\n\n- Feature 1\n- Feature 2\n- Feature 3\n\n## Installation\n\n\`\`\`bash\nnpm install my-project\n\`\`\`\n\n## Usage\n\n\`\`\`typescript\nimport { thing } from 'my-project';\nthing();\n\`\`\`\n\n## License\n\nMIT\n`,
+  },
+  {
+    name: "Daily Journal",
+    icon: "📔",
+    content: `# ${new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}\n\n## 🌅 Morning\n\nHow I'm feeling: \n\nTop 3 priorities today:\n1. \n2. \n3. \n\n## 📝 Notes\n\n\n## 🌙 Evening Reflection\n\nWhat went well: \n\nWhat could improve: \n\nGratitude: \n`,
+  },
+  {
+    name: "Technical Spec",
+    icon: "🔧",
+    content: `# Technical Design: [Feature Name]\n\n**Author:** \n**Status:** Draft\n**Date:** ${new Date().toLocaleDateString()}\n\n## Overview\n\nBrief description of what we're building and why.\n\n## Goals\n\n- \n- \n\n## Non-Goals\n\n- \n\n## Proposed Solution\n\n### Architecture\n\n\`\`\`mermaid\nflowchart LR\n  A[Client] --> B[API]\n  B --> C[(Database)]\n\`\`\`\n\n### API\n\n\`\`\`typescript\ninterface Example {\n  id: string;\n}\n\`\`\`\n\n## Alternatives Considered\n\n\n## Open Questions\n\n- [ ] \n`,
+  },
+  {
+    name: "Math Notes",
+    icon: "📐",
+    content: `# Math Notes\n\n## Inline math\n\nEuler's identity: $e^{i\\pi} + 1 = 0$\n\n## Block math\n\n$$\n\\int_{-\\infty}^{\\infty} e^{-x^2}\\,dx = \\sqrt{\\pi}\n$$\n\n$$\n\\frac{\\partial}{\\partial t}\\Psi = -\\frac{i}{\\hbar}\\hat{H}\\Psi\n$$\n`,
+  },
+  {
+    name: "Mermaid Diagram",
+    icon: "🗺️",
+    content: `# Diagrams\n\n\`\`\`mermaid\nflowchart TD\n  A[Start] --> B{Decision?}\n  B -->|Yes| C[Action A]\n  B -->|No| D[Action B]\n  C --> E[End]\n  D --> E\n\`\`\`\n\n\`\`\`mermaid\nsequenceDiagram\n  Alice->>Bob: Hello!\n  Bob-->>Alice: Hi there\n\`\`\`\n`,
+  },
 ];
 
 // -------- marked config --------
@@ -60,13 +151,10 @@ marked.setOptions({
 });
 marked.use({
   renderer: {
-    code(this: any, { text, lang }: { text: string; lang?: string }) {
+    code(this: Record<string, unknown>, { text, lang }: { text: string; lang?: string }) {
       // Keep mermaid blocks as-is so the mermaid renderer can pick them up.
       if (lang === "mermaid") {
-        const escaped = text
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;");
+        const escaped = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         return `<pre><code class="language-mermaid">${escaped}</code></pre>`;
       }
       const language = lang && hljs.getLanguage(lang) ? lang : "plaintext";
@@ -80,7 +168,10 @@ marked.use({
 const originalListitem = renderer.listitem?.bind(renderer);
 marked.use({
   renderer: {
-    listitem(this: any, item: any) {
+    listitem(
+      this: Record<string, unknown>,
+      item: { task?: boolean; checked?: boolean; tokens: unknown[] },
+    ) {
       if (item.task) {
         const checked = item.checked ? "checked" : "";
         const text = this.parser.parseInline(item.tokens);
@@ -99,7 +190,12 @@ const FOCUS_KEY = "inkwell-focus";
 const SNAPSHOTS_KEY = "inkwell-snapshots";
 const SCROLLSYNC_KEY = "inkwell-scrollsync";
 
-interface Snapshot { id: string; name: string; content: string; createdAt: number; }
+interface Snapshot {
+  id: string;
+  name: string;
+  content: string;
+  createdAt: number;
+}
 
 const SAMPLE = `# Welcome to Inkwell
 
@@ -237,10 +333,18 @@ export default function MarkdownEditor() {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) setContent(stored);
       }
-      try { setSnapshots(JSON.parse(localStorage.getItem(SNAPSHOTS_KEY) ?? "[]")); } catch { /* noop */ }
+      try {
+        setSnapshots(JSON.parse(localStorage.getItem(SNAPSHOTS_KEY) ?? "[]"));
+      } catch {
+        /* noop */
+      }
       setScrollSync(localStorage.getItem(SCROLLSYNC_KEY) !== "0");
       const savedTheme = localStorage.getItem(THEME_KEY);
-      setDark(savedTheme ? savedTheme === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches);
+      setDark(
+        savedTheme
+          ? savedTheme === "dark"
+          : window.matchMedia("(prefers-color-scheme: dark)").matches,
+      );
       const savedView = localStorage.getItem(VIEW_KEY) as ViewMode | null;
       if (savedView) setView(savedView);
       setFocusMode(localStorage.getItem(FOCUS_KEY) === "1");
@@ -267,11 +371,21 @@ export default function MarkdownEditor() {
   }, [dark]);
 
   // persist view / focus / goal (skip until hydration finished so we don't clobber stored values)
-  useEffect(() => { if (hydratedRef.current) localStorage.setItem(VIEW_KEY, view); }, [view]);
-  useEffect(() => { if (hydratedRef.current) localStorage.setItem(FOCUS_KEY, focusMode ? "1" : "0"); }, [focusMode]);
-  useEffect(() => { if (hydratedRef.current) localStorage.setItem(GOAL_KEY, String(goal)); }, [goal]);
-  useEffect(() => { if (hydratedRef.current) localStorage.setItem(SNAPSHOTS_KEY, JSON.stringify(snapshots)); }, [snapshots]);
-  useEffect(() => { if (hydratedRef.current) localStorage.setItem(SCROLLSYNC_KEY, scrollSync ? "1" : "0"); }, [scrollSync]);
+  useEffect(() => {
+    if (hydratedRef.current) localStorage.setItem(VIEW_KEY, view);
+  }, [view]);
+  useEffect(() => {
+    if (hydratedRef.current) localStorage.setItem(FOCUS_KEY, focusMode ? "1" : "0");
+  }, [focusMode]);
+  useEffect(() => {
+    if (hydratedRef.current) localStorage.setItem(GOAL_KEY, String(goal));
+  }, [goal]);
+  useEffect(() => {
+    if (hydratedRef.current) localStorage.setItem(SNAPSHOTS_KEY, JSON.stringify(snapshots));
+  }, [snapshots]);
+  useEffect(() => {
+    if (hydratedRef.current) localStorage.setItem(SCROLLSYNC_KEY, scrollSync ? "1" : "0");
+  }, [scrollSync]);
 
   // autosave
   useEffect(() => {
@@ -300,10 +414,13 @@ export default function MarkdownEditor() {
     h.index = h.stack.length - 1;
   }, []);
 
-  const changeContent = useCallback((value: string) => {
-    setContent(value);
-    pushHistory(value);
-  }, [pushHistory]);
+  const changeContent = useCallback(
+    (value: string) => {
+      setContent(value);
+      pushHistory(value);
+    },
+    [pushHistory],
+  );
 
   const undo = useCallback(() => {
     const h = historyRef.current;
@@ -326,37 +443,73 @@ export default function MarkdownEditor() {
     let processed = content
       .replace(/\$\$([\s\S]+?)\$\$/g, (_, expr) => {
         try {
-          const rendered = katex.renderToString(expr.trim(), { displayMode: true, throwOnError: false });
+          const rendered = katex.renderToString(expr.trim(), {
+            displayMode: true,
+            throwOnError: false,
+          });
           mathBlocks.push(`<div class="ink-math-block">${rendered}</div>`);
           return `\n\nMATHBLOCK${mathBlocks.length - 1}\n\n`;
-        } catch { return _; }
+        } catch {
+          return _;
+        }
       })
-      .replace(/(?<!\\)\$([^\$\n]+?)\$/g, (_, expr) => {
+      .replace(/(?<!\\)\$([^\n$]+?)\$/g, (_, expr) => {
         try {
           const rendered = katex.renderToString(expr.trim(), { throwOnError: false });
           mathBlocks.push(`<span class="ink-math-inline">${rendered}</span>`);
           return `MATHBLOCK${mathBlocks.length - 1}`;
-        } catch { return _; }
+        } catch {
+          return _;
+        }
       });
     // Emoji shortcodes
     processed = processed.replace(/:([a-z0-9_+-]+):/g, (m, code) => EMOJI_MAP[code] ?? m);
     const raw = marked.parse(processed, { async: false }) as string;
     let withMath = raw.replace(/MATHBLOCK(\d+)/g, (_, i) => mathBlocks[Number(i)] ?? "");
     // Bake heading ids into the HTML so they survive React re-commits of dangerouslySetInnerHTML.
-    withMath = withMath.replace(/<(h[1-6])([^>]*)>([\s\S]*?)<\/\1>/g, (match, tag, attrs, inner) => {
-      if (/\sid=/.test(attrs)) return match;
-      const text = inner.replace(/<[^>]+>/g, "");
-      const id = slugify(text);
-      return id ? `<${tag}${attrs} id="${id}">${inner}</${tag}>` : match;
-    });
+    withMath = withMath.replace(
+      /<(h[1-6])([^>]*)>([\s\S]*?)<\/\1>/g,
+      (match, tag, attrs, inner) => {
+        if (/\sid=/.test(attrs)) return match;
+        const text = inner.replace(/<[^>]+>/g, "");
+        const id = slugify(text);
+        return id ? `<${tag}${attrs} id="${id}">${inner}</${tag}>` : match;
+      },
+    );
     // Bake copy buttons into <pre> blocks (skip mermaid — those get replaced by SVG).
-    withMath = withMath.replace(/<pre>(\s*<code(?![^>]*language-mermaid)[^>]*>[\s\S]*?<\/code>\s*)<\/pre>/g,
-      (_m, inner) => `<pre style="position:relative">${inner}<button type="button" class="ink-code-copy" data-copy aria-label="Copy code">Copy</button></pre>`,
+    withMath = withMath.replace(
+      /<pre>(\s*<code(?![^>]*language-mermaid)[^>]*>[\s\S]*?<\/code>\s*)<\/pre>/g,
+      (_m, inner) =>
+        `<pre style="position:relative">${inner}<button type="button" class="ink-code-copy" data-copy aria-label="Copy code">Copy</button></pre>`,
     );
     if (typeof window === "undefined") return withMath;
     return DOMPurify.sanitize(withMath, {
       ADD_ATTR: ["target", "checked", "disabled", "data-copy"],
-      ADD_TAGS: ["math", "semantics", "mrow", "mi", "mo", "mn", "msup", "msub", "mfrac", "annotation", "svg", "path", "g", "line", "rect", "circle", "text", "tspan", "polygon", "polyline", "foreignObject", "defs", "marker"],
+      ADD_TAGS: [
+        "math",
+        "semantics",
+        "mrow",
+        "mi",
+        "mo",
+        "mn",
+        "msup",
+        "msub",
+        "mfrac",
+        "annotation",
+        "svg",
+        "path",
+        "g",
+        "line",
+        "rect",
+        "circle",
+        "text",
+        "tspan",
+        "polygon",
+        "polyline",
+        "foreignObject",
+        "defs",
+        "marker",
+      ],
     });
   }, [content]);
 
@@ -390,8 +543,10 @@ export default function MarkdownEditor() {
       pendingRenders.push(
         mermaid
           .render(id, src)
-          .then(({ svg }) => { mermaidCacheRef.current.set(src, sanitizeSvg(svg)); })
-          .catch((err: any) => {
+          .then(({ svg }) => {
+            mermaidCacheRef.current.set(src, sanitizeSvg(svg));
+          })
+          .catch((err: unknown) => {
             const msg = String(err?.message ?? err).replace(/</g, "&lt;");
             mermaidCacheRef.current.set(
               src,
@@ -420,8 +575,13 @@ export default function MarkdownEditor() {
         await navigator.clipboard.writeText(code);
         btn.textContent = "Copied";
         btn.classList.add("copied");
-        setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("copied"); }, 1400);
-      } catch { /* ignore */ }
+        setTimeout(() => {
+          btn.textContent = "Copy";
+          btn.classList.remove("copied");
+        }, 1400);
+      } catch {
+        /* ignore */
+      }
     };
     pv.addEventListener("click", onClick);
     return () => pv.removeEventListener("click", onClick);
@@ -437,7 +597,9 @@ export default function MarkdownEditor() {
     const ratio = ta.scrollTop / Math.max(1, ta.scrollHeight - ta.clientHeight);
     syncingRef.current = true;
     pv.scrollTop = ratio * Math.max(0, pv.scrollHeight - pv.clientHeight);
-    requestAnimationFrame(() => { syncingRef.current = false; });
+    requestAnimationFrame(() => {
+      syncingRef.current = false;
+    });
   }, [scrollSync]);
   const onPreviewScroll = useCallback(() => {
     if (!scrollSync || syncingRef.current) return;
@@ -447,7 +609,9 @@ export default function MarkdownEditor() {
     const ratio = pv.scrollTop / Math.max(1, pv.scrollHeight - pv.clientHeight);
     syncingRef.current = true;
     ta.scrollTop = ratio * Math.max(0, ta.scrollHeight - ta.clientHeight);
-    requestAnimationFrame(() => { syncingRef.current = false; });
+    requestAnimationFrame(() => {
+      syncingRef.current = false;
+    });
   }, [scrollSync]);
 
   // ---------- Snapshots ----------
@@ -459,15 +623,23 @@ export default function MarkdownEditor() {
     setShareToast(`Snapshot “${name}” saved.`);
     setTimeout(() => setShareToast(null), 2200);
   }, [content]);
-  const restoreSnapshot = useCallback((snap: Snapshot) => {
-    if (content.trim() && !confirm(`Restore “${snap.name}”? Current document will be replaced (you can snapshot first).`)) return;
-    changeContent(snap.content);
-    setSnapsOpen(false);
-  }, [content]);
+  const restoreSnapshot = useCallback(
+    (snap: Snapshot) => {
+      if (
+        content.trim() &&
+        !confirm(
+          `Restore “${snap.name}”? Current document will be replaced (you can snapshot first).`,
+        )
+      )
+        return;
+      changeContent(snap.content);
+      setSnapsOpen(false);
+    },
+    [content, changeContent],
+  );
   const deleteSnapshot = useCallback((id: string) => {
     setSnapshots((s) => s.filter((x) => x.id !== id));
   }, []);
-
 
   const headings = useMemo(() => extractHeadings(content), [content]);
   const s = useMemo(() => stats(content), [content]);
@@ -647,7 +819,12 @@ export default function MarkdownEditor() {
     w.document.close();
     // Wait for external stylesheets (KaTeX/highlight.js) to load before printing
     const trigger = () => {
-      try { w.focus(); w.print(); } catch { /* noop */ }
+      try {
+        w.focus();
+        w.print();
+      } catch {
+        /* noop */
+      }
     };
     if (w.document.readyState === "complete") {
       setTimeout(trigger, 500);
@@ -694,20 +871,23 @@ export default function MarkdownEditor() {
   };
 
   // ---------- Find & Replace ----------
-  const computeMatches = useCallback((q: string, cs: boolean) => {
-    if (!q) return [] as number[];
-    const hay = cs ? content : content.toLowerCase();
-    const needle = cs ? q : q.toLowerCase();
-    const out: number[] = [];
-    let i = 0;
-    while (i <= hay.length - needle.length) {
-      const p = hay.indexOf(needle, i);
-      if (p === -1) break;
-      out.push(p);
-      i = p + Math.max(needle.length, 1);
-    }
-    return out;
-  }, [content]);
+  const computeMatches = useCallback(
+    (q: string, cs: boolean) => {
+      if (!q) return [] as number[];
+      const hay = cs ? content : content.toLowerCase();
+      const needle = cs ? q : q.toLowerCase();
+      const out: number[] = [];
+      let i = 0;
+      while (i <= hay.length - needle.length) {
+        const p = hay.indexOf(needle, i);
+        if (p === -1) break;
+        out.push(p);
+        i = p + Math.max(needle.length, 1);
+      }
+      return out;
+    },
+    [content],
+  );
 
   useEffect(() => {
     const m = computeMatches(findQuery, findCase);
@@ -715,26 +895,31 @@ export default function MarkdownEditor() {
     setFindIndex(0);
   }, [findQuery, findCase, computeMatches]);
 
-  const focusMatch = useCallback((idx: number) => {
-    const ta = textareaRef.current;
-    if (!ta || findMatches.length === 0) return;
-    const pos = findMatches[idx];
-    ta.focus();
-    ta.setSelectionRange(pos, pos + findQuery.length);
-    const lineHeight = 24;
-    const before = content.slice(0, pos).split("\n").length - 1;
-    ta.scrollTop = Math.max(0, before * lineHeight - 100);
-  }, [findMatches, findQuery, content]);
+  const focusMatch = useCallback(
+    (idx: number) => {
+      const ta = textareaRef.current;
+      if (!ta || findMatches.length === 0) return;
+      const pos = findMatches[idx];
+      ta.focus();
+      ta.setSelectionRange(pos, pos + findQuery.length);
+      const lineHeight = 24;
+      const before = content.slice(0, pos).split("\n").length - 1;
+      ta.scrollTop = Math.max(0, before * lineHeight - 100);
+    },
+    [findMatches, findQuery, content],
+  );
 
   const nextMatch = () => {
     if (findMatches.length === 0) return;
     const n = (findIndex + 1) % findMatches.length;
-    setFindIndex(n); focusMatch(n);
+    setFindIndex(n);
+    focusMatch(n);
   };
   const prevMatch = () => {
     if (findMatches.length === 0) return;
     const n = (findIndex - 1 + findMatches.length) % findMatches.length;
-    setFindIndex(n); focusMatch(n);
+    setFindIndex(n);
+    focusMatch(n);
   };
   const replaceOne = () => {
     if (findMatches.length === 0) return;
@@ -760,38 +945,124 @@ export default function MarkdownEditor() {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const mod = e.metaKey || e.ctrlKey;
-      if (mod && (e.key === "p" || (e.shiftKey && e.key === "P"))) { e.preventDefault(); setCmdOpen(true); setCmdQuery(""); return; }
+      if (mod && (e.key === "p" || (e.shiftKey && e.key === "P"))) {
+        e.preventDefault();
+        setCmdOpen(true);
+        setCmdQuery("");
+        return;
+      }
       if (e.key === "?" && !mod) {
         const ae = document.activeElement;
         const tag = ae?.tagName;
-        if (tag !== "TEXTAREA" && tag !== "INPUT") { e.preventDefault(); setCheatOpen(true); return; }
+        if (tag !== "TEXTAREA" && tag !== "INPUT") {
+          e.preventDefault();
+          setCheatOpen(true);
+          return;
+        }
       }
-      if (mod && e.shiftKey && (e.key === "s" || e.key === "S")) { e.preventDefault(); saveSnapshot(); return; }
-      if (mod && e.key === "f") { e.preventDefault(); openFind(); return; }
-      if (mod && e.key === "h") { e.preventDefault(); openFind(); return; }
-      if (mod && e.key === ".") { e.preventDefault(); setFocusMode((v) => !v); return; }
+      if (mod && e.shiftKey && (e.key === "s" || e.key === "S")) {
+        e.preventDefault();
+        saveSnapshot();
+        return;
+      }
+      if (mod && e.key === "f") {
+        e.preventDefault();
+        openFind();
+        return;
+      }
+      if (mod && e.key === "h") {
+        e.preventDefault();
+        openFind();
+        return;
+      }
+      if (mod && e.key === ".") {
+        e.preventDefault();
+        setFocusMode((v) => !v);
+        return;
+      }
       if (e.key === "Escape") {
-        if (cmdOpen) { e.preventDefault(); setCmdOpen(false); return; }
-        if (templatesOpen) { e.preventDefault(); setTemplatesOpen(false); return; }
-        if (cheatOpen) { e.preventDefault(); setCheatOpen(false); return; }
-        if (snapsOpen) { e.preventDefault(); setSnapsOpen(false); return; }
-        if (findOpen) { e.preventDefault(); setFindOpen(false); return; }
+        if (cmdOpen) {
+          e.preventDefault();
+          setCmdOpen(false);
+          return;
+        }
+        if (templatesOpen) {
+          e.preventDefault();
+          setTemplatesOpen(false);
+          return;
+        }
+        if (cheatOpen) {
+          e.preventDefault();
+          setCheatOpen(false);
+          return;
+        }
+        if (snapsOpen) {
+          e.preventDefault();
+          setSnapsOpen(false);
+          return;
+        }
+        if (findOpen) {
+          e.preventDefault();
+          setFindOpen(false);
+          return;
+        }
       }
       if (findOpen && e.key === "Enter" && document.activeElement === findInputRef.current) {
-        e.preventDefault(); e.shiftKey ? prevMatch() : nextMatch(); return;
+        e.preventDefault();
+        if (e.shiftKey) {
+          prevMatch();
+        } else {
+          nextMatch();
+        }
+        return;
       }
       if (!mod) return;
-      if (e.key === "b") { e.preventDefault(); wrap("**"); }
-      else if (e.key === "i") { e.preventDefault(); wrap("_"); }
-      else if (e.key === "k") { e.preventDefault(); insertLink(); }
-      else if (e.key === "s") { e.preventDefault(); localStorage.setItem(STORAGE_KEY, content); setSaved(true); }
-      else if (e.key === "z" && !e.shiftKey) { e.preventDefault(); undo(); }
-      else if ((e.key === "z" && e.shiftKey) || e.key === "y") { e.preventDefault(); redo(); }
-      else if (e.key === "/") { e.preventDefault(); (document.getElementById("outline-search") as HTMLInputElement)?.focus(); }
+      if (e.key === "b") {
+        e.preventDefault();
+        wrap("**");
+      } else if (e.key === "i") {
+        e.preventDefault();
+        wrap("_");
+      } else if (e.key === "k") {
+        e.preventDefault();
+        insertLink();
+      } else if (e.key === "s") {
+        e.preventDefault();
+        localStorage.setItem(STORAGE_KEY, content);
+        setSaved(true);
+      } else if (e.key === "z" && !e.shiftKey) {
+        e.preventDefault();
+        undo();
+      } else if ((e.key === "z" && e.shiftKey) || e.key === "y") {
+        e.preventDefault();
+        redo();
+      } else if (e.key === "/") {
+        e.preventDefault();
+        (document.getElementById("outline-search") as HTMLInputElement)?.focus();
+      }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [content, undo, redo, findOpen, cmdOpen, templatesOpen, cheatOpen, snapsOpen, findIndex, findMatches, findQuery, replaceQuery, focusMatch, saveSnapshot]);
+  }, [
+    content,
+    undo,
+    redo,
+    findOpen,
+    cmdOpen,
+    templatesOpen,
+    cheatOpen,
+    snapsOpen,
+    findIndex,
+    findMatches,
+    findQuery,
+    replaceQuery,
+    focusMatch,
+    saveSnapshot,
+    insertLink,
+    nextMatch,
+    prevMatch,
+    wrap,
+  ]);
 
   // drag & drop
   const onDrop = (e: React.DragEvent) => {
@@ -838,7 +1109,11 @@ export default function MarkdownEditor() {
   };
 
   return (
-    <div className={`ink-root ${focusMode ? "focus-mode" : ""}`} onDragOver={(e) => e.preventDefault()} onDrop={onDrop}>
+    <div
+      className={`ink-root ${focusMode ? "focus-mode" : ""}`}
+      onDragOver={(e) => e.preventDefault()}
+      onDrop={onDrop}
+    >
       {/* Find & Replace overlay */}
       {findOpen && (
         <div className="ink-find-panel" role="dialog" aria-label="Find and replace">
@@ -854,16 +1129,39 @@ export default function MarkdownEditor() {
             <span className="ink-find-count">
               {findMatches.length === 0 ? "0/0" : `${findIndex + 1}/${findMatches.length}`}
             </span>
-            <button className="ink-find-btn" onClick={prevMatch} title="Previous  ⇧↵" aria-label="Previous match"><ChevronUp size={14} /></button>
-            <button className="ink-find-btn" onClick={nextMatch} title="Next  ↵" aria-label="Next match"><ChevronDown size={14} /></button>
+            <button
+              className="ink-find-btn"
+              onClick={prevMatch}
+              title="Previous  ⇧↵"
+              aria-label="Previous match"
+            >
+              <ChevronUp size={14} />
+            </button>
+            <button
+              className="ink-find-btn"
+              onClick={nextMatch}
+              title="Next  ↵"
+              aria-label="Next match"
+            >
+              <ChevronDown size={14} />
+            </button>
             <button
               className={`ink-find-btn ${findCase ? "on" : ""}`}
               onClick={() => setFindCase((v) => !v)}
               title="Match case"
               aria-label="Match case"
               aria-pressed={findCase}
-            >Aa</button>
-            <button className="ink-find-btn" onClick={() => setFindOpen(false)} title="Close  Esc" aria-label="Close find and replace"><X size={14} /></button>
+            >
+              Aa
+            </button>
+            <button
+              className="ink-find-btn"
+              onClick={() => setFindOpen(false)}
+              title="Close  Esc"
+              aria-label="Close find and replace"
+            >
+              <X size={14} />
+            </button>
           </div>
           <div className="ink-find-row">
             <Replace size={14} />
@@ -873,8 +1171,16 @@ export default function MarkdownEditor() {
               onChange={(e) => setReplaceQuery(e.target.value)}
               placeholder="Replace with…"
             />
-            <button className="ink-find-btn wide" onClick={replaceOne} disabled={findMatches.length === 0}>Replace</button>
-            <button className="ink-find-btn wide" onClick={replaceAll} disabled={!findQuery}>All</button>
+            <button
+              className="ink-find-btn wide"
+              onClick={replaceOne}
+              disabled={findMatches.length === 0}
+            >
+              Replace
+            </button>
+            <button className="ink-find-btn wide" onClick={replaceAll} disabled={!findQuery}>
+              All
+            </button>
           </div>
         </div>
       )}
@@ -882,94 +1188,234 @@ export default function MarkdownEditor() {
       {/* Header */}
       <header className="ink-header">
         <div className="ink-brand">
-          <div className="ink-logo" aria-hidden="true"><Sparkles size={18} /></div>
+          <div className="ink-logo" aria-hidden="true">
+            <Sparkles size={18} />
+          </div>
           <div>
             <h1 className="ink-brand-name" aria-label="Inkwell — Markdown Studio">
               Inkwell<span className="sr-only"> — Markdown Studio</span>
             </h1>
-            <div className="ink-brand-sub" aria-hidden="true">Markdown Studio</div>
+            <div className="ink-brand-sub" aria-hidden="true">
+              Markdown Studio
+            </div>
           </div>
         </div>
 
         <div className="ink-toolbar">
           <ToolGroup>
-            <ToolBtn title="Bold  ⌘B" onClick={() => wrap("**")}><Bold size={15} /></ToolBtn>
-            <ToolBtn title="Italic  ⌘I" onClick={() => wrap("_")}><Italic size={15} /></ToolBtn>
-            <ToolBtn title="Strike" onClick={() => wrap("~~")}><Strikethrough size={15} /></ToolBtn>
-            <ToolBtn title="Inline code" onClick={() => wrap("`")}><Code size={15} /></ToolBtn>
+            <ToolBtn title="Bold  ⌘B" onClick={() => wrap("**")}>
+              <Bold size={15} />
+            </ToolBtn>
+            <ToolBtn title="Italic  ⌘I" onClick={() => wrap("_")}>
+              <Italic size={15} />
+            </ToolBtn>
+            <ToolBtn title="Strike" onClick={() => wrap("~~")}>
+              <Strikethrough size={15} />
+            </ToolBtn>
+            <ToolBtn title="Inline code" onClick={() => wrap("`")}>
+              <Code size={15} />
+            </ToolBtn>
           </ToolGroup>
           <ToolGroup>
-            <ToolBtn title="Heading 1" onClick={() => prefixLines("# ")}><Heading1 size={15} /></ToolBtn>
-            <ToolBtn title="Heading 2" onClick={() => prefixLines("## ")}><Heading2 size={15} /></ToolBtn>
-            <ToolBtn title="Heading 3" onClick={() => prefixLines("### ")}><Heading3 size={15} /></ToolBtn>
+            <ToolBtn title="Heading 1" onClick={() => prefixLines("# ")}>
+              <Heading1 size={15} />
+            </ToolBtn>
+            <ToolBtn title="Heading 2" onClick={() => prefixLines("## ")}>
+              <Heading2 size={15} />
+            </ToolBtn>
+            <ToolBtn title="Heading 3" onClick={() => prefixLines("### ")}>
+              <Heading3 size={15} />
+            </ToolBtn>
           </ToolGroup>
           <ToolGroup>
-            <ToolBtn title="Bulleted list" onClick={() => prefixLines("- ")}><List size={15} /></ToolBtn>
-            <ToolBtn title="Numbered list" onClick={() => prefixLines("1. ")}><ListOrdered size={15} /></ToolBtn>
-            <ToolBtn title="Task" onClick={() => prefixLines("- [ ] ")}><CheckSquare size={15} /></ToolBtn>
-            <ToolBtn title="Quote" onClick={() => prefixLines("> ")}><Quote size={15} /></ToolBtn>
+            <ToolBtn title="Bulleted list" onClick={() => prefixLines("- ")}>
+              <List size={15} />
+            </ToolBtn>
+            <ToolBtn title="Numbered list" onClick={() => prefixLines("1. ")}>
+              <ListOrdered size={15} />
+            </ToolBtn>
+            <ToolBtn title="Task" onClick={() => prefixLines("- [ ] ")}>
+              <CheckSquare size={15} />
+            </ToolBtn>
+            <ToolBtn title="Quote" onClick={() => prefixLines("> ")}>
+              <Quote size={15} />
+            </ToolBtn>
           </ToolGroup>
           <ToolGroup>
-            <ToolBtn title="Link  ⌘K" onClick={insertLink}><LinkIcon size={15} /></ToolBtn>
-            <ToolBtn title="Image" onClick={insertImage}><ImageIcon size={15} /></ToolBtn>
-            <ToolBtn title="Table" onClick={insertTable}><TableIcon size={15} /></ToolBtn>
-            <ToolBtn title="Divider" onClick={() => insertAtCursor("\n\n---\n\n")}><Minus size={15} /></ToolBtn>
-            <ToolBtn title="Code block" onClick={() => insertAtCursor("\n```ts\n\n```\n")}><FileText size={15} /></ToolBtn>
+            <ToolBtn title="Link  ⌘K" onClick={insertLink}>
+              <LinkIcon size={15} />
+            </ToolBtn>
+            <ToolBtn title="Image" onClick={insertImage}>
+              <ImageIcon size={15} />
+            </ToolBtn>
+            <ToolBtn title="Table" onClick={insertTable}>
+              <TableIcon size={15} />
+            </ToolBtn>
+            <ToolBtn title="Divider" onClick={() => insertAtCursor("\n\n---\n\n")}>
+              <Minus size={15} />
+            </ToolBtn>
+            <ToolBtn title="Code block" onClick={() => insertAtCursor("\n```ts\n\n```\n")}>
+              <FileText size={15} />
+            </ToolBtn>
           </ToolGroup>
           <ToolGroup>
-            <ToolBtn title="Undo  ⌘Z" onClick={undo}><Undo2 size={15} /></ToolBtn>
-            <ToolBtn title="Redo  ⇧⌘Z" onClick={redo}><Redo2 size={15} /></ToolBtn>
+            <ToolBtn title="Undo  ⌘Z" onClick={undo}>
+              <Undo2 size={15} />
+            </ToolBtn>
+            <ToolBtn title="Redo  ⇧⌘Z" onClick={redo}>
+              <Redo2 size={15} />
+            </ToolBtn>
           </ToolGroup>
         </div>
 
         <div className="ink-right">
           <div className="ink-view-toggle" role="tablist" aria-label="View">
-            <button className={view === "editor" ? "active" : ""} onClick={() => setView("editor")} title="Editor only" aria-label="Editor only">
+            <button
+              className={view === "editor" ? "active" : ""}
+              onClick={() => setView("editor")}
+              title="Editor only"
+              aria-label="Editor only"
+            >
               <EyeOff size={14} /> Edit
             </button>
-            <button className={view === "split" ? "active" : ""} onClick={() => setView("split")} title="Split view" aria-label="Split view">
+            <button
+              className={view === "split" ? "active" : ""}
+              onClick={() => setView("split")}
+              title="Split view"
+              aria-label="Split view"
+            >
               <Columns2 size={14} /> Split
             </button>
-            <button className={view === "preview" ? "active" : ""} onClick={() => setView("preview")} title="Preview only" aria-label="Preview only">
+            <button
+              className={view === "preview" ? "active" : ""}
+              onClick={() => setView("preview")}
+              title="Preview only"
+              aria-label="Preview only"
+            >
               <Eye size={14} /> Preview
             </button>
           </div>
 
           <div className="ink-menu">
-            <button className="ink-icon-btn" title="Command palette  ⌘P" aria-label="Command palette" onClick={() => { setCmdOpen(true); setCmdQuery(""); }}><Command size={15} /></button>
-            <button className="ink-icon-btn" title="Templates" aria-label="Templates" onClick={() => setTemplatesOpen(true)}><BookTemplate size={15} /></button>
-            <button className="ink-icon-btn" title="Snapshots" aria-label="Snapshots" onClick={() => setSnapsOpen(true)}><History size={15} /></button>
-            <button className={`ink-icon-btn ${scrollSync ? "on" : ""}`} title={`Scroll sync: ${scrollSync ? "on" : "off"}`} aria-label={`Scroll sync: ${scrollSync ? "on" : "off"}`} aria-pressed={scrollSync} onClick={() => setScrollSync((v) => !v)}><Columns2 size={15} /></button>
-            <button className="ink-icon-btn" title="Keyboard shortcuts  ?" aria-label="Keyboard shortcuts" onClick={() => setCheatOpen(true)}><Keyboard size={15} /></button>
-            <button className="ink-icon-btn" title="Share via URL" aria-label="Share via URL" onClick={shareUrl}><Share2 size={15} /></button>
-            <button className="ink-icon-btn" title="Find & Replace  ⌘F" aria-label="Find and replace" onClick={openFind}><Search size={15} /></button>
-            <button className="ink-icon-btn" title="Import .md" aria-label="Import markdown file" onClick={importFile}><Upload size={15} /></button>
+            <button
+              className="ink-icon-btn"
+              title="Command palette  ⌘P"
+              aria-label="Command palette"
+              onClick={() => {
+                setCmdOpen(true);
+                setCmdQuery("");
+              }}
+            >
+              <Command size={15} />
+            </button>
+            <button
+              className="ink-icon-btn"
+              title="Templates"
+              aria-label="Templates"
+              onClick={() => setTemplatesOpen(true)}
+            >
+              <BookTemplate size={15} />
+            </button>
+            <button
+              className="ink-icon-btn"
+              title="Snapshots"
+              aria-label="Snapshots"
+              onClick={() => setSnapsOpen(true)}
+            >
+              <History size={15} />
+            </button>
+            <button
+              className={`ink-icon-btn ${scrollSync ? "on" : ""}`}
+              title={`Scroll sync: ${scrollSync ? "on" : "off"}`}
+              aria-label={`Scroll sync: ${scrollSync ? "on" : "off"}`}
+              aria-pressed={scrollSync}
+              onClick={() => setScrollSync((v) => !v)}
+            >
+              <Columns2 size={15} />
+            </button>
+            <button
+              className="ink-icon-btn"
+              title="Keyboard shortcuts  ?"
+              aria-label="Keyboard shortcuts"
+              onClick={() => setCheatOpen(true)}
+            >
+              <Keyboard size={15} />
+            </button>
+            <button
+              className="ink-icon-btn"
+              title="Share via URL"
+              aria-label="Share via URL"
+              onClick={shareUrl}
+            >
+              <Share2 size={15} />
+            </button>
+            <button
+              className="ink-icon-btn"
+              title="Find & Replace  ⌘F"
+              aria-label="Find and replace"
+              onClick={openFind}
+            >
+              <Search size={15} />
+            </button>
+            <button
+              className="ink-icon-btn"
+              title="Import .md"
+              aria-label="Import markdown file"
+              onClick={importFile}
+            >
+              <Upload size={15} />
+            </button>
             <div className="ink-dropdown">
-              <button className="ink-icon-btn" title="Export" aria-label="Export"><Download size={15} /></button>
+              <button className="ink-icon-btn" title="Export" aria-label="Export">
+                <Download size={15} />
+              </button>
               <div className="ink-dropdown-menu">
-                <button onClick={exportMd}><FileDown size={14} /> Export .md</button>
-                <button onClick={exportHtml}><FileDown size={14} /> Export .html</button>
-                <button onClick={exportPdf}><Printer size={14} /> Export .pdf (print)</button>
+                <button onClick={exportMd}>
+                  <FileDown size={14} /> Export .md
+                </button>
+                <button onClick={exportHtml}>
+                  <FileDown size={14} /> Export .html
+                </button>
+                <button onClick={exportPdf}>
+                  <Printer size={14} /> Export .pdf (print)
+                </button>
                 <div className="ink-menu-sep" />
-                <button onClick={copyMd}><Copy size={14} /> Copy markdown</button>
-                <button onClick={copyHtml}><Copy size={14} /> Copy HTML</button>
+                <button onClick={copyMd}>
+                  <Copy size={14} /> Copy markdown
+                </button>
+                <button onClick={copyHtml}>
+                  <Copy size={14} /> Copy HTML
+                </button>
               </div>
             </div>
-            <button className="ink-icon-btn" title="Clear document" aria-label="Clear document" onClick={clearAll}><Trash2 size={15} /></button>
+            <button
+              className="ink-icon-btn"
+              title="Clear document"
+              aria-label="Clear document"
+              onClick={clearAll}
+            >
+              <Trash2 size={15} />
+            </button>
             <button
               className={`ink-icon-btn ${focusMode ? "on" : ""}`}
               title="Focus mode  ⌘."
               aria-label="Toggle focus mode"
               aria-pressed={focusMode}
               onClick={() => setFocusMode((v) => !v)}
-            ><Focus size={15} /></button>
-            <button className="ink-icon-btn" title="Toggle theme" aria-label="Toggle theme" onClick={() => setDark((d) => !d)}>
+            >
+              <Focus size={15} />
+            </button>
+            <button
+              className="ink-icon-btn"
+              title="Toggle theme"
+              aria-label="Toggle theme"
+              onClick={() => setDark((d) => !d)}
+            >
               {dark ? <Sun size={15} /> : <Moon size={15} />}
             </button>
           </div>
         </div>
       </header>
-
 
       {/* Body */}
       <main className="ink-body">
@@ -1030,7 +1476,6 @@ export default function MarkdownEditor() {
           )}
         </aside>
 
-
         {/* Panes */}
         <section className={`ink-panes ink-view-${view}`}>
           {view !== "preview" && (
@@ -1065,10 +1510,18 @@ export default function MarkdownEditor() {
       {/* Footer */}
       <footer className="ink-footer">
         <div className="ink-stats">
-          <span><b>{s.words.toLocaleString()}</b> words</span>
-          <span><b>{s.chars.toLocaleString()}</b> chars</span>
-          <span><b>{s.lines.toLocaleString()}</b> lines</span>
-          <span><b>~{s.readMin} min</b> read</span>
+          <span>
+            <b>{s.words.toLocaleString()}</b> words
+          </span>
+          <span>
+            <b>{s.chars.toLocaleString()}</b> chars
+          </span>
+          <span>
+            <b>{s.lines.toLocaleString()}</b> lines
+          </span>
+          <span>
+            <b>~{s.readMin} min</b> read
+          </span>
         </div>
         <div className="ink-footer-right">
           <GoalWidget words={s.words} goal={goal} setGoal={setGoal} />
@@ -1079,7 +1532,6 @@ export default function MarkdownEditor() {
         </div>
       </footer>
 
-
       {shareToast && <div className="ink-toast">{shareToast}</div>}
 
       {templatesOpen && (
@@ -1088,14 +1540,26 @@ export default function MarkdownEditor() {
             <div className="ink-modal-head">
               <BookTemplate size={16} />
               <span>Templates</span>
-              <button className="ink-modal-close" aria-label="Close templates" onClick={() => setTemplatesOpen(false)}><X size={16} /></button>
+              <button
+                className="ink-modal-close"
+                aria-label="Close templates"
+                onClick={() => setTemplatesOpen(false)}
+              >
+                <X size={16} />
+              </button>
             </div>
             <div className="ink-tpl-grid">
               {TEMPLATES.map((t) => (
-                <button key={t.name} className="ink-tpl-card" onClick={() => applyTemplate(t.content)}>
+                <button
+                  key={t.name}
+                  className="ink-tpl-card"
+                  onClick={() => applyTemplate(t.content)}
+                >
                   <span className="ink-tpl-icon">{t.icon}</span>
                   <span className="ink-tpl-name">{t.name}</span>
-                  <span className="ink-tpl-preview">{t.content.split("\n").slice(0, 2).join(" · ").slice(0, 80)}…</span>
+                  <span className="ink-tpl-preview">
+                    {t.content.split("\n").slice(0, 2).join(" · ").slice(0, 80)}…
+                  </span>
                 </button>
               ))}
             </div>
@@ -1120,20 +1584,74 @@ export default function MarkdownEditor() {
             { id: "link", label: "Insert link", hint: "⌘K", run: insertLink },
             { id: "image", label: "Insert image", run: insertImage },
             { id: "table", label: "Insert table", run: insertTable },
-            { id: "code", label: "Insert code block", run: () => insertAtCursor("\n```ts\n\n```\n") },
+            {
+              id: "code",
+              label: "Insert code block",
+              run: () => insertAtCursor("\n```ts\n\n```\n"),
+            },
             { id: "math-inline", label: "Insert math (inline)", run: () => wrap("$") },
-            { id: "math-block", label: "Insert math (block)", run: () => insertAtCursor("\n$$\n\n$$\n") },
-            { id: "mermaid", label: "Insert Mermaid diagram", run: () => insertAtCursor("\n```mermaid\nflowchart LR\n  A --> B\n```\n") },
-            { id: "toc", label: "Insert table of contents", run: () => insertAtCursor("\n" + headings.map(h => `${"  ".repeat(h.level - 1)}- [${h.text}](#${h.id})`).join("\n") + "\n") },
+            {
+              id: "math-block",
+              label: "Insert math (block)",
+              run: () => insertAtCursor("\n$$\n\n$$\n"),
+            },
+            {
+              id: "mermaid",
+              label: "Insert Mermaid diagram",
+              run: () => insertAtCursor("\n```mermaid\nflowchart LR\n  A --> B\n```\n"),
+            },
+            {
+              id: "toc",
+              label: "Insert table of contents",
+              run: () =>
+                insertAtCursor(
+                  "\n" +
+                    headings
+                      .map((h) => `${"  ".repeat(h.level - 1)}- [${h.text}](#${h.id})`)
+                      .join("\n") +
+                    "\n",
+                ),
+            },
             { id: "find", label: "Find & Replace", hint: "⌘F", run: openFind },
-            { id: "focus", label: "Toggle focus mode", hint: "⌘.", run: () => setFocusMode((v) => !v) },
+            {
+              id: "focus",
+              label: "Toggle focus mode",
+              hint: "⌘.",
+              run: () => setFocusMode((v) => !v),
+            },
             { id: "theme", label: "Toggle theme", run: () => setDark((d) => !d) },
             { id: "share", label: "Copy share URL", run: shareUrl },
-            { id: "templates", label: "Open templates…", run: () => { setCmdOpen(false); setTemplatesOpen(true); } },
+            {
+              id: "templates",
+              label: "Open templates…",
+              run: () => {
+                setCmdOpen(false);
+                setTemplatesOpen(true);
+              },
+            },
             { id: "snap-save", label: "Save snapshot…", hint: "⇧⌘S", run: saveSnapshot },
-            { id: "snap-open", label: "Open snapshots…", run: () => { setCmdOpen(false); setSnapsOpen(true); } },
-            { id: "cheat", label: "Keyboard shortcuts…", hint: "?", run: () => { setCmdOpen(false); setCheatOpen(true); } },
-            { id: "scrollsync", label: `Scroll sync: ${scrollSync ? "on" : "off"}`, run: () => setScrollSync((v) => !v) },
+            {
+              id: "snap-open",
+              label: "Open snapshots…",
+              run: () => {
+                setCmdOpen(false);
+                setSnapsOpen(true);
+              },
+            },
+            {
+              id: "cheat",
+              label: "Keyboard shortcuts…",
+              hint: "?",
+              run: () => {
+                setCmdOpen(false);
+                setCheatOpen(true);
+              },
+            },
+            {
+              id: "scrollsync",
+              label: `Scroll sync: ${scrollSync ? "on" : "off"}`,
+              run: () => setScrollSync((v) => !v),
+            },
             { id: "export-md", label: "Export as .md", run: exportMd },
             { id: "export-html", label: "Export as .html", run: exportHtml },
             { id: "export-pdf", label: "Export as .pdf", run: exportPdf },
@@ -1157,27 +1675,51 @@ export default function MarkdownEditor() {
             <div className="ink-modal-head">
               <History size={16} />
               <span>Snapshots</span>
-              <button className="ink-icon-btn" style={{ marginLeft: "auto" }} onClick={saveSnapshot} title="Save current as snapshot" aria-label="Save current as snapshot">
+              <button
+                className="ink-icon-btn"
+                style={{ marginLeft: "auto" }}
+                onClick={saveSnapshot}
+                title="Save current as snapshot"
+                aria-label="Save current as snapshot"
+              >
                 <Save size={14} />
               </button>
-              <button className="ink-modal-close" aria-label="Close snapshots" onClick={() => setSnapsOpen(false)}><X size={16} /></button>
+              <button
+                className="ink-modal-close"
+                aria-label="Close snapshots"
+                onClick={() => setSnapsOpen(false)}
+              >
+                <X size={16} />
+              </button>
             </div>
             <div className="ink-snap-list">
               {snapshots.length === 0 && (
-                <div className="ink-snap-empty">No snapshots yet. Save one with ⇧⌘S to preserve a version.</div>
+                <div className="ink-snap-empty">
+                  No snapshots yet. Save one with ⇧⌘S to preserve a version.
+                </div>
               )}
               {snapshots.map((snap) => (
                 <div key={snap.id} className="ink-snap-item">
                   <div className="ink-snap-info">
                     <div className="ink-snap-name">{snap.name}</div>
                     <div className="ink-snap-meta">
-                      {new Date(snap.createdAt).toLocaleString()} · {snap.content.length.toLocaleString()} chars
+                      {new Date(snap.createdAt).toLocaleString()} ·{" "}
+                      {snap.content.length.toLocaleString()} chars
                     </div>
                   </div>
-                  <button className="ink-snap-btn" onClick={() => restoreSnapshot(snap)} title="Restore this snapshot">
+                  <button
+                    className="ink-snap-btn"
+                    onClick={() => restoreSnapshot(snap)}
+                    title="Restore this snapshot"
+                  >
                     <RotateCcw size={13} /> Restore
                   </button>
-                  <button className="ink-snap-btn danger" onClick={() => deleteSnapshot(snap.id)} title="Delete snapshot" aria-label="Delete snapshot">
+                  <button
+                    className="ink-snap-btn danger"
+                    onClick={() => deleteSnapshot(snap.id)}
+                    title="Delete snapshot"
+                    aria-label="Delete snapshot"
+                  >
                     <Trash2 size={13} />
                   </button>
                 </div>
@@ -1193,7 +1735,13 @@ export default function MarkdownEditor() {
             <div className="ink-modal-head">
               <Keyboard size={16} />
               <span>Keyboard shortcuts</span>
-              <button className="ink-modal-close" aria-label="Close shortcuts" onClick={() => setCheatOpen(false)}><X size={16} /></button>
+              <button
+                className="ink-modal-close"
+                aria-label="Close shortcuts"
+                onClick={() => setCheatOpen(false)}
+              >
+                <X size={16} />
+              </button>
             </div>
             <div className="ink-cheat">
               {[
@@ -1227,19 +1775,37 @@ export default function MarkdownEditor() {
   );
 }
 
-interface CmdAction { id: string; label: string; hint?: string; run: () => void }
-function CommandPalette({ query, setQuery, close, actions }: {
-  query: string; setQuery: (s: string) => void; close: () => void; actions: CmdAction[];
+interface CmdAction {
+  id: string;
+  label: string;
+  hint?: string;
+  run: () => void;
+}
+function CommandPalette({
+  query,
+  setQuery,
+  close,
+  actions,
+}: {
+  query: string;
+  setQuery: (s: string) => void;
+  close: () => void;
+  actions: CmdAction[];
 }) {
   const [idx, setIdx] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
-  useEffect(() => { inputRef.current?.focus(); }, []);
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
   const q = query.trim().toLowerCase();
-  const filtered = q
-    ? actions.filter((a) => a.label.toLowerCase().includes(q))
-    : actions;
-  useEffect(() => { setIdx(0); }, [query]);
-  const run = (a: CmdAction) => { a.run(); close(); };
+  const filtered = q ? actions.filter((a) => a.label.toLowerCase().includes(q)) : actions;
+  useEffect(() => {
+    setIdx(0);
+  }, [query]);
+  const run = (a: CmdAction) => {
+    a.run();
+    close();
+  };
   return (
     <div className="ink-modal-backdrop" onClick={close}>
       <div className="ink-cmd" onClick={(e) => e.stopPropagation()}>
@@ -1250,9 +1816,16 @@ function CommandPalette({ query, setQuery, close, actions }: {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "ArrowDown") { e.preventDefault(); setIdx((i) => Math.min(filtered.length - 1, i + 1)); }
-              else if (e.key === "ArrowUp") { e.preventDefault(); setIdx((i) => Math.max(0, i - 1)); }
-              else if (e.key === "Enter") { e.preventDefault(); if (filtered[idx]) run(filtered[idx]); }
+              if (e.key === "ArrowDown") {
+                e.preventDefault();
+                setIdx((i) => Math.min(filtered.length - 1, i + 1));
+              } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                setIdx((i) => Math.max(0, i - 1));
+              } else if (e.key === "Enter") {
+                e.preventDefault();
+                if (filtered[idx]) run(filtered[idx]);
+              }
             }}
             placeholder="Type a command or search…"
           />
@@ -1277,43 +1850,84 @@ function CommandPalette({ query, setQuery, close, actions }: {
   );
 }
 
-
 function ToolGroup({ children }: { children: React.ReactNode }) {
   return <div className="ink-tool-group">{children}</div>;
 }
 function ToolBtn({
-  children, onClick, title,
-}: { children: React.ReactNode; onClick: () => void; title?: string }) {
+  children,
+  onClick,
+  title,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+  title?: string;
+}) {
   return (
-    <button className="ink-tool-btn" onClick={onClick} title={title} aria-label={title} type="button">
+    <button
+      className="ink-tool-btn"
+      onClick={onClick}
+      title={title}
+      aria-label={title}
+      type="button"
+    >
       {children}
     </button>
   );
 }
 
-function GoalWidget({ words, goal, setGoal }: { words: number; goal: number; setGoal: (n: number) => void }) {
+function GoalWidget({
+  words,
+  goal,
+  setGoal,
+}: {
+  words: number;
+  goal: number;
+  setGoal: (n: number) => void;
+}) {
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState(String(goal || 500));
   const pct = goal > 0 ? Math.min(1, words / goal) : 0;
   const done = goal > 0 && words >= goal;
-  const r = 8, c = 2 * Math.PI * r;
+  const r = 8,
+    c = 2 * Math.PI * r;
   return (
     <div className="ink-goal">
       <button className="ink-goal-btn" onClick={() => setOpen((v) => !v)} title="Word count goal">
         {goal > 0 ? (
           <>
             <svg width="22" height="22" viewBox="0 0 22 22">
-              <circle cx="11" cy="11" r={r} fill="none" stroke="currentColor" strokeOpacity="0.15" strokeWidth="2.5" />
-              <circle cx="11" cy="11" r={r} fill="none" stroke={done ? "var(--ink-accent-2)" : "var(--ink-accent)"}
-                strokeWidth="2.5" strokeLinecap="round"
-                strokeDasharray={c} strokeDashoffset={c * (1 - pct)}
-                transform="rotate(-90 11 11)" style={{ transition: "stroke-dashoffset 300ms ease" }} />
+              <circle
+                cx="11"
+                cy="11"
+                r={r}
+                fill="none"
+                stroke="currentColor"
+                strokeOpacity="0.15"
+                strokeWidth="2.5"
+              />
+              <circle
+                cx="11"
+                cy="11"
+                r={r}
+                fill="none"
+                stroke={done ? "var(--ink-accent-2)" : "var(--ink-accent)"}
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeDasharray={c}
+                strokeDashoffset={c * (1 - pct)}
+                transform="rotate(-90 11 11)"
+                style={{ transition: "stroke-dashoffset 300ms ease" }}
+              />
             </svg>
             <span>{done ? <Check size={12} /> : `${Math.round(pct * 100)}%`}</span>
-            <span className="ink-goal-sub">{words}/{goal}</span>
+            <span className="ink-goal-sub">
+              {words}/{goal}
+            </span>
           </>
         ) : (
-          <><Target size={13} /> <span>Set goal</span></>
+          <>
+            <Target size={13} /> <span>Set goal</span>
+          </>
         )}
       </button>
       {open && (
@@ -1321,22 +1935,52 @@ function GoalWidget({ words, goal, setGoal }: { words: number; goal: number; set
           <label>Daily word goal</label>
           <div className="ink-goal-row">
             <input
-              type="number" min="0" step="50"
-              value={draft} onChange={(e) => setDraft(e.target.value)}
+              type="number"
+              min="0"
+              step="50"
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") { setGoal(Math.max(0, Number(draft) || 0)); setOpen(false); }
+                if (e.key === "Enter") {
+                  setGoal(Math.max(0, Number(draft) || 0));
+                  setOpen(false);
+                }
                 if (e.key === "Escape") setOpen(false);
               }}
               autoFocus
             />
-            <button onClick={() => { setGoal(Math.max(0, Number(draft) || 0)); setOpen(false); }}>Set</button>
+            <button
+              onClick={() => {
+                setGoal(Math.max(0, Number(draft) || 0));
+                setOpen(false);
+              }}
+            >
+              Set
+            </button>
           </div>
           <div className="ink-goal-presets">
             {[250, 500, 1000, 2000].map((n) => (
-              <button key={n} onClick={() => { setGoal(n); setDraft(String(n)); setOpen(false); }}>{n}</button>
+              <button
+                key={n}
+                onClick={() => {
+                  setGoal(n);
+                  setDraft(String(n));
+                  setOpen(false);
+                }}
+              >
+                {n}
+              </button>
             ))}
             {goal > 0 && (
-              <button className="clear" onClick={() => { setGoal(0); setOpen(false); }}>Clear</button>
+              <button
+                className="clear"
+                onClick={() => {
+                  setGoal(0);
+                  setOpen(false);
+                }}
+              >
+                Clear
+              </button>
             )}
           </div>
         </div>
