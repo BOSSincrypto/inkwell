@@ -1686,6 +1686,7 @@ const styles = /* css */ `
   }
   .ink-tool-group + .ink-tool-group { margin-left: 6px; }
   .ink-tool-btn { width: 36px; height: 36px; }
+  .ink-body { grid-template-columns: 1fr; }
   .ink-outline {
     position: fixed; inset: 0; z-index: 45; width: min(320px, 88vw) !important;
     background: color-mix(in oklab, var(--ink-panel) 97%, transparent);
