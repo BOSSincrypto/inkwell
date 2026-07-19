@@ -165,7 +165,6 @@ marked.use({
 });
 
 // Task list rendering
-const originalListitem = renderer.listitem?.bind(renderer);
 marked.use({
   renderer: {
     listitem(
@@ -251,6 +250,8 @@ interface Heading {
 function slugify(text: string): string {
   return text
     .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^\w\s-]/g, "")
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
@@ -322,17 +323,22 @@ export default function MarkdownEditor() {
   // Load persisted state from localStorage / URL hash once, after hydration.
   useEffect(() => {
     try {
+      let loadedContent = SAMPLE;
       if (window.location.hash.startsWith("#s=")) {
         const decoded = LZString.decompressFromEncodedURIComponent(window.location.hash.slice(3));
-        if (decoded) setContent(decoded);
-        else {
+        if (decoded) {
+          loadedContent = decoded;
+        } else {
           const stored = localStorage.getItem(STORAGE_KEY);
-          if (stored) setContent(stored);
+          if (stored) loadedContent = stored;
         }
       } else {
         const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) setContent(stored);
+        if (stored) loadedContent = stored;
       }
+      setContent(loadedContent);
+      // Initialize history with the loaded content so undo works correctly from the start
+      historyRef.current = { stack: [loadedContent], index: 0 };
       try {
         setSnapshots(JSON.parse(localStorage.getItem(SNAPSHOTS_KEY) ?? "[]"));
       } catch {
@@ -397,14 +403,6 @@ export default function MarkdownEditor() {
     }, 400);
     return () => clearTimeout(t);
   }, [content]);
-
-  // init history
-  useEffect(() => {
-    if (historyRef.current.stack.length === 0) {
-      historyRef.current = { stack: [content], index: 0 };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const pushHistory = useCallback((value: string) => {
     const h = historyRef.current;
@@ -547,7 +545,9 @@ export default function MarkdownEditor() {
             mermaidCacheRef.current.set(src, sanitizeSvg(svg));
           })
           .catch((err: unknown) => {
-            const msg = String(err?.message ?? err).replace(/</g, "&lt;");
+            const msg = String(err?.message ?? err)
+              .replace(/</g, "&lt;")
+              .replace(/&/g, "&amp;");
             mermaidCacheRef.current.set(
               src,
               `<pre class="ink-mermaid-err"><code>Mermaid error: ${msg}</code></pre>`,
@@ -758,7 +758,11 @@ export default function MarkdownEditor() {
 
   const buildDocumentHtml = (opts: { title: string; forPrint?: boolean }): string => {
     const body = inlineMermaid(html);
-    const title = (opts.title || "Document").replace(/</g, "&lt;");
+    const title = (opts.title || "Document")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
     const printCss = opts.forPrint
       ? `@page{margin:18mm}@media print{a{color:inherit;text-decoration:none}pre,blockquote,table,.ink-mermaid,figure{break-inside:avoid;page-break-inside:avoid}h1,h2,h3{break-after:avoid;page-break-after:avoid}}`
       : "";
