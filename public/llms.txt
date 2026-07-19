@@ -1,0 +1,7 @@
+# Inkwell — Markdown Studio
+
+> A refined, distraction-free markdown editor with live preview, Mermaid diagrams, LaTeX math, syntax highlighting, autosave, and export to Markdown, HTML, and PDF. Runs entirely in the browser.
+
+## Pages
+
+- [Home](/): The Inkwell markdown editor with live preview and export.
